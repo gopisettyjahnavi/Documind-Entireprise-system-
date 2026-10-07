@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>DocuMind Enterprise — Intelligent Document Q&A</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app">
+      <aside class="sidebar">
+        <div class="brand">
+          <div class="logo">📚</div>
+          <div>
+            <div class="title">DocuMind</div>
+            <div class="subtitle">Enterprise Search</div>
+          </div>
+        </div>
+
+        <div class="status-card">
+          <div class="status-header">
+            <span>API Connection</span>
+            <span id="health-pill" class="pill pending">Checking…</span>
+          </div>
+          <div class="status-meta">
+            <div>
+              <div class="label">Server</div>
+              <div class="input-row">
+                <input
+                  id="api-url"
+                  type="text"
+                  placeholder="http://localhost:8000"
+                  value=""
+                />
+                <button id="check-health" class="btn ghost">Test</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Quick Questions</div>
+          <div class="suggestions" id="suggestions">
+            <button class="chip">What are the main policies?</button>
+            <button class="chip">What are the eligibility criteria?</button>
+            <button class="chip">What are the penalties?</button>
+            <button class="chip">Summarize key requirements</button>
+            <button class="chip">List compliance guidelines</button>
+          </div>
+        </div>
+
+        <div class="card compact">
+          <div class="card-title">Tips & Tricks</div>
+          <ul class="tips">
+            <li>Ask clear, specific questions</li>
+            <li>Use phrases from the documents</li>
+            <li>Check the API connection status</li>
+            <li>Export your conversation anytime</li>
+          </ul>
+        </div>
+
+        <div class="footer">
+          <span>DocuMind UI</span>
+          <span class="muted">v2.0</span>
+        </div>
+      </aside>
+
+      <main class="main">
+        <header class="topbar">
+          <div class="page-title">
+            <h1>Document Intelligence</h1>
+            <p>Ask questions about your documents with AI-powered precision</p>
+          </div>
+          <div class="actions">
+            <button id="upload-btn" class="btn ghost">📤 Upload</button>
+            <button id="clear-chat" class="btn ghost">🔄 Clear</button>
+            <button id="export-chat" class="btn primary">⬇️ Export</button>
+          </div>
+        </header>
+
+        <section class="metrics">
+          <div class="metric">
+            <div class="metric-label">Questions Asked</div>
+            <div id="metric-total" class="metric-value">0</div>
+          </div>
+          <div class="metric">
+            <div class="metric-label">Avg Response Time</div>
+            <div id="metric-latency" class="metric-value">—</div>
+          </div>
+          <div class="metric">
+            <div class="metric-label">Status</div>
+            <div id="metric-status" class="metric-value">—</div>
+          </div>
+        </section>
+
+        <section class="chat" id="chat">
+          <div class="chat-empty">
+            <div class="empty-icon">🔍</div>
+            <h2>Start asking questions</h2>
+            <p>
+              Connect to your API and ask questions about your documents. 
+              Powered by advanced AI and semantic search.
+            </p>
+          </div>
+        </section>
+
+        <section class="composer">
+          <div class="input-box">
+            <textarea
+              id="question"
+              rows="3"
+              placeholder="Ask your documents anything... Use Ctrl+Enter to send"
+            ></textarea>
+            <div class="composer-actions">
+              <div class="left">
+                <span id="char-count" class="muted">0 / 1000</span>
+              </div>
+              <div class="right">
+                <button id="send" class="btn primary">Send Query</button>
+              </div>
+            </div>
+          </div>
+          <div class="helper">
+            Press <span class="kbd">Ctrl</span> + <span class="kbd">Enter</span> to send your question
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <template id="message-template">
+      <div class="message">
+        <div class="avatar"></div>
+        <div class="content">
+          <div class="meta">
+            <span class="role"></span>
+            <span class="time"></span>
+          </div>
+          <div class="bubble"></div>
+        </div>
+      </div>
+    </template>
+
+    <!-- Upload Modal -->
+    <div id="upload-modal" class="modal">
+      <div class="modal-overlay"></div>
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2>📤 Upload Documents</h2>
+          <button id="close-modal" class="modal-close">✕</button>
+        </div>
+        <div class="modal-body">
+          <div class="upload-zone" id="upload-zone">
+            <div class="upload-icon">📄</div>
+            <div class="upload-title">Drop PDF files here</div>
+            <div class="upload-subtitle">or click to browse</div>
+            <input type="file" id="file-input" accept=".pdf" multiple style="display: none;" />
+          </div>
+          <div id="upload-list" class="upload-list"></div>
+        </div>
+        <div class="modal-footer">
+          <button id="cancel-upload" class="btn ghost">Cancel</button>
+          <button id="confirm-upload" class="btn primary" disabled>Upload Files</button>
+        </div>
+      </div>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+</html>
